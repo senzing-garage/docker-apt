@@ -19,14 +19,15 @@ RUN apt update \
     sudo \
     wget
 
+# Install Senzing repository index.
+
 RUN curl \
     --output /senzingrepo_1.0.0-1_amd64.deb \
-    https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.0-1_amd64.deb
-
-RUN apt -y install \
-    /senzingrepo_1.0.0-1_amd64.deb
-
-RUN apt update
+    https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.0-1_amd64.deb \
+ && apt -y install \
+    /senzingrepo_1.0.0-1_amd64.deb \
+ && apt update \
+ && rm /senzingrepo_1.0.0-1_amd64.deb
 
 # Copy files from repository.
 
