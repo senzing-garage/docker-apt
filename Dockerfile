@@ -9,10 +9,24 @@ LABEL Name="senzing/apt" \
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
-# Install packages via yum.
+# Install packages via apt.
+
+RUN apt update \
+ && apt -y install \
+    apt-transport-https \
+    curl \
+    gnupg \
+    sudo \
+    wget
+
+RUN curl \
+    --output /senzingrepo_1.0.0-1_amd64.deb \
+    https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.0-1_amd64.deb
 
 RUN apt -y install \
-    https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.0-1_amd64.deb
+    /senzingrepo_1.0.0-1_amd64.deb
+
+RUN apt update
 
 # Copy files from repository.
 
