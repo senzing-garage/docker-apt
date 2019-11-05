@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=debian:9
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2019-10-24
+ENV REFRESHED_AT=2019-11-05
 
 LABEL Name="senzing/apt" \
       Maintainer="support@senzing.com" \
@@ -28,6 +28,12 @@ RUN curl \
     /senzingrepo_1.0.0-1_amd64.deb \
  && apt update \
  && rm /senzingrepo_1.0.0-1_amd64.deb
+
+# Support for msodbcsql17.
+
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+ && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+ && apt-get update
 
 # Copy files from repository.
 
