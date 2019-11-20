@@ -29,7 +29,6 @@ apt -y install senzingdata-v1 senzingapi
     1. [EULA](#eula)
     1. [Volumes](#volumes)
     1. [Run docker container](#run-docker-container)
-    1. [Run docker container on local file](#run-docker-container-on-local-file)
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
@@ -37,6 +36,14 @@ apt -y install senzingdata-v1 senzingapi
 1. [Examples](#examples)
 1. [Errors](#errors)
 1. [References](#references)
+
+### Legend
+
+1. :thinking: - A "thinker" icon means that a little extra thinking may be required.
+   Perhaps you'll need to make some choices.
+   Perhaps it's an optional step.
+1. :pencil2: - A "pencil" icon means that the instructions may need modification before performing.
+1. :warning: - A "warning" icon means that something tricky is happening, so pay attention.
 
 ## Expectations
 
@@ -95,10 +102,11 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 ### Volumes
 
+:thinking:
 The output of `apt install senzingapi` will place files in different directories.
 Create a folder for each output directory.
 
-1. :pencil2: Option #1.
+1. **Example #1:**
    To mimic an actual DEB installation,
    identify directories for DEB output in this manner:
 
@@ -109,7 +117,7 @@ Create a folder for each output directory.
     export SENZING_VAR_DIR=/var/opt/senzing
     ```
 
-1. :pencil2: Option #2.
+1. :pencil2: **Example #2:**
    Alternatively, directories for DEB output can be put anywhere.
    Example:
 
@@ -124,7 +132,11 @@ Create a folder for each output directory.
 
 ### Run docker container
 
-Option #1. `apt` install from apt repository.
+:thinking:
+Just like `apt`, the `senzing/apt` container can install from a local file or from an apt repository.
+Choose one of the following options.
+
+**Option #1:** `apt` install from apt repository.
 
 1. Run the docker container.
    Example:
@@ -142,9 +154,7 @@ Option #1. `apt` install from apt repository.
       senzing/apt
     ```
 
-### Run docker container on local file
-
-Option #2. `apt` install local DEB files.
+**Option #2:** `apt` install local DEB files.
 
 1. To download Senzing DEB file, see
    [github.com/Senzing/docker-aptdownloader](https://github.com/Senzing/docker-aptdownloader).
@@ -160,20 +170,20 @@ Option #2. `apt` install local DEB files.
     export SENZING_DATA_DEB_FILENAME=senzingdata-v1-nn.nn.nn.x86_64.rpm
     ```
 
-1. Run the docker container.
+1. Run docker container.
    Example:
 
     ```console
     sudo docker run \
-      ${SENZING_ACCEPT_EULA_PARAMETER} \
       --interactive \
       --rm \
       --tty \
       --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
-      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
       --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
+      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
       --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
       --volume ${SENZING_DEB_DIR}:/data \
+      ${SENZING_ACCEPT_EULA_PARAMETER} \
       senzing/apt -y localinstall \
         /data/${SENZING_DATA_DEB_FILENAME} \
         /data/${SENZING_API_DEB_FILENAME}
@@ -207,20 +217,20 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
 ### Build docker image for development
 
-1. Option #1 - Using `docker` command and GitHub.
+1. **Option #1:** Using `docker` command and GitHub.
 
     ```console
     sudo docker build --tag senzing/apt https://github.com/senzing/docker-apt.git
     ```
 
-1. Option #2 - Using `docker` command and local repository.
+1. **Option #2:** Using `docker` command and local repository.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
     sudo docker build --tag senzing/apt .
     ```
 
-1. Option #3 - Using `make` command.
+1. **Option #3:** Using `make` command.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
