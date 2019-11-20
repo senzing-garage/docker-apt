@@ -134,6 +134,7 @@ Create a folder for each output directory.
 
 :thinking:
 Just like `apt`, the `senzing/apt` container can install from a local file or from an apt repository.
+Choose one of the following options.
 
 **Option #1:** `apt` install from apt repository.
 
