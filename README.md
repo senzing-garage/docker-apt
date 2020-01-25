@@ -97,6 +97,7 @@ To use the Senzing API, you must agree to the End User License Agreement (EULA).
 
 ### Run docker container
 Now that we've set up all of our environment variables, we're ready to run the container using the following command
+    
     ```console
     docker run \
       ${SENZING_ACCEPT_EULA_PARAMETER} \
