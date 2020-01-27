@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Specific mention of `senzingdata-v1` is deleted.
   It is automatically installed via `senzingapi` dependency.
+- Upgrade Dockerfile to `FROM debian:10`
 
 ## [1.0.0] - 2019-11-13
 
