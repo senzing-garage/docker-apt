@@ -5,12 +5,11 @@
 This repository is a wrapper over the `apt` command.
 It can be used to download and extract "deb" files.
 
-A running docker container installs the latest
-`senzingapi` and `senzingdata-v1`
-packages by running the following command:
+A running docker container installs the latest `senzingapi`
+package by running the following command:
 
 ```console
-apt -y install senzingdata-v1 senzingapi
+apt -y install senzingapi
 ```
 
 ### Related artifacts
