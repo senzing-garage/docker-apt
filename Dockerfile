@@ -1,11 +1,11 @@
-ARG BASE_IMAGE=debian:9
+ARG BASE_IMAGE=debian:10
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2019-11-13
+ENV REFRESHED_AT=2020-01-27
 
 LABEL Name="senzing/apt" \
       Maintainer="support@senzing.com" \
-      Version="1.0.0"
+      Version="1.0.2"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -42,4 +42,4 @@ COPY ./rootfs /
 # Runtime execution.
 
 ENTRYPOINT ["apt"]
-CMD ["-y", "install", "senzingdata-v1", "senzingapi"]
+CMD ["-y", "install", "senzingapi"]
