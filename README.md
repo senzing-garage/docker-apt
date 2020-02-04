@@ -4,17 +4,14 @@ Docker-apt is a way to download the Senzing API, via the `apt` command, onto a d
 More specifically, this image will download the latest `senzingdata-v1` and `senzingapi`.
 
 ### Contents
-1. [Expectations](#expectations)
-    1. [Space](#space)
-    1. [Time](#time)
-    1. [Background knowledge](#background-knowledge)
-1. [Setup and Run Container](#setup-and-run-container)
+1. [Before you install](#before-you-install)
+1. [Setting up and running the container](#setting-up-and-running-the-container)
+    1. [Configure Environment Variables](#configure-environment-variables)
     1. [Create Project Directory and Mount Volumes](#create-project-directory-and-mount-volumes)
-    1. [Configure Environment Variables](configure-environment-variables)
     1. [Accepting the EULA](#accepting-the-eula)
-    1. [Run docker container](#run-docker-container)
-1. [Develop with Senzing Container](#develop-with-senzing-container)
-    1. [Prerequisite software](#prerequisite-software)
+    1. [Running the Senzing container](#running-the-senzing-container)
+1. [Develop with the Senzing Container](#develop-with-the-senzing-container)
+    1. Prerequisite software
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
 1. [Examples](#examples)
