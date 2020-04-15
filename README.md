@@ -2,15 +2,9 @@
 
 ## Overview
 
-This repository is a wrapper over the `apt` command.
+This repository creates a Docker wrapper over the `apt` command.
 It can be used to download and extract "deb" files.
-
-A running docker container installs the latest `senzingapi`
-package by running the following command:
-
-```console
-apt -y install senzingapi
-```
+The default behavior is to install the latest `senzingapi` packages.
 
 ### Related artifacts
 
@@ -20,19 +14,18 @@ apt -y install senzingapi
 ### Contents
 
 1. [Expectations](#expectations)
-    1. [Space](#space)
-    1. [Time](#time)
-    1. [Background knowledge](#background-knowledge)
 1. [Demonstrate using Docker](#demonstrate-using-docker)
-    1. [Configuration](#configuration)
     1. [EULA](#eula)
-    1. [Volumes](#volumes)
-    1. [Run docker container](#run-docker-container)
+    1. [Docker volumes](#docker-volumes)
+    1. [Run Docker container](#run-docker-container)
 1. [Develop](#develop)
-    1. [Prerequisite software](#prerequisite-software)
+    1. [Prerequisite software for development](#prerequisite-software-for-development)
     1. [Clone repository](#clone-repository)
-    1. [Build docker image for development](#build-docker-image-for-development)
+    1. [Build Docker image](#build-docker-image)
 1. [Examples](#examples)
+1. [Advanced](#advanced)
+    1. [Configuration](#configuration)
+    1. [Run Docker container on local file](#run-docker-container-on-local-file)
 1. [Errors](#errors)
 1. [References](#references)
 
@@ -46,34 +39,12 @@ apt -y install senzingapi
 
 ## Expectations
 
-### Space
-
-This repository and demonstration require 6 GB free disk space.
-
-### Time
-
-Budget 10 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
-
-### Background knowledge
-
-This repository assumes a working knowledge of:
-
-1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
+- **Space:** This repository and demonstration require 6 GB free disk space.
+- **Time:** Budget 10 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
+- **Background knowledge:** This repository assumes a working knowledge of:
+  - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
 
 ## Demonstrate using Docker
-
-### Configuration
-
-Configuration values specified by environment variable or command line parameter.
-
-- **[SENZING_ACCEPT_EULA](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula)**
-- **[SENZING_API_DEB_FILENAME](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_api_deb_filename)**
-- **[SENZING_DATA_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_data_dir)**
-- **[SENZING_DATA_DEB_FILENAME](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_data_deb_filename)**
-- **[SENZING_DEB_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_deb_dir)**
-- **[SENZING_ETC_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_etc_dir)**
-- **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_g2_dir)**
-- **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_var_dir)**
 
 ### EULA
 
@@ -81,16 +52,9 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
 1. :warning: This step is intentionally tricky and not simply copy/paste.
    This ensures that you make a conscious effort to accept the EULA.
-   See [Configuration](#configuration) or
-   [SENZING_ACCEPT_EULA](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula)
-   for the correct value.
-   Replace the double-quote character in the example with the correct value.
-   The use of the double-quote character is intentional to prevent simple copy/paste.
    Example:
 
-    ```console
-    export SENZING_ACCEPT_EULA="
-    ```
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
 1. Construct parameter for `docker run`.
    Example:
@@ -99,25 +63,19 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
     export SENZING_ACCEPT_EULA_PARAMETER="--env SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA}"
     ```
 
-### Volumes
+### Docker volumes
 
-1. :pencil2: Specify the directory containing the Senzing installation.
-   Use the same `SENZING_VOLUME` value used when performing
-   "[How to initialize Senzing with Docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/initialize-senzing-with-docker.md)".
+Senzing follows the [Linux File Hierarchy Standard](https://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.pdf).
+The Senzing RPM installs 2 packages: `senzingapi`, `senzingdata`.
+`senzingapi` is installed into `/opt/senzing/g2` and `senzingdata` is installed into `/opt/senzing/data` inside the Docker container.
+Environment variables will be used in `--volume` options to externalize the installations.
+
+1. :pencil2: Specify the directory where to install Senzing.
    Example:
 
     ```console
     export SENZING_VOLUME=/opt/my-senzing
     ```
-
-    1. Here's a simple test to see if `SENZING_VOLUME` is correct.
-       The following commands should return file contents.
-       Example:
-
-        ```console
-        cat ${SENZING_VOLUME}/g2/g2BuildVersion.json
-        cat ${SENZING_VOLUME}/data/1.0.0/libpostal/data_version
-        ```
 
     1. :warning:
        **macOS** - [File sharing](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/share-directories-with-docker.md#macos)
@@ -126,78 +84,35 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
        **Windows** - [File sharing](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/share-directories-with-docker.md#windows)
        must be enabled for `SENZING_VOLUME`.
 
-1. Identify the `data_version`, `etc`, `g2`, and `var` directories.
+1. Identify directories for `data` and `g2`.
    Example:
 
     ```console
-    export SENZING_DATA_VERSION_DIR=${SENZING_VOLUME}/data/1.0.0
-    export SENZING_ETC_DIR=${SENZING_VOLUME}/etc
+    export SENZING_DATA_DIR=${SENZING_VOLUME}/data
     export SENZING_G2_DIR=${SENZING_VOLUME}/g2
-    export SENZING_VAR_DIR=${SENZING_VOLUME}/var
     ```
-    
-### Run docker container
 
-:thinking:
-Just like `apt`, the `senzing/apt` container can install from a local file or from an apt repository.
-Choose one of the following options.
+### Run Docker container
 
-**Option #1:** `apt` install from apt repository.
-
-1. Run the docker container.
+1. Run Docker container.
    Example:
 
     ```console
     sudo docker run \
-      ${SENZING_ACCEPT_EULA_PARAMETER} \
-      --interactive \
       --rm \
-      --tty \
       --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
       --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
-      --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
-      --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
+      ${SENZING_ACCEPT_EULA_PARAMETER} \
       senzing/apt
     ```
 
-**Option #2:** `apt` install local DEB files.
-
-1. To download Senzing DEB file, see
-   [github.com/Senzing/docker-aptdownloader](https://github.com/Senzing/docker-aptdownloader).
-
-1. :pencil2: Set environment variables.
-   Identify directory containing DEB files
-   and the exact name of the DEB files.
-   Example:
-
-    ```console
-    export SENZING_DEB_DIR=~/Downloads
-    export SENZING_API_DEB_FILENAME=senzingapi-nn.nn.nn.x86_64.rpm
-    export SENZING_DATA_DEB_FILENAME=senzingdata-v1-nn.nn.nn.x86_64.rpm
-    ```
-
-1. Run docker container.
-   Example:
-
-    ```console
-    sudo docker run \
-      --interactive \
-      --rm \
-      --tty \
-      --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
-      --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
-      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
-      --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
-      --volume ${SENZING_DEB_DIR}:/data \
-      ${SENZING_ACCEPT_EULA_PARAMETER} \
-      senzing/apt -y localinstall \
-        /data/${SENZING_DATA_DEB_FILENAME} \
-        /data/${SENZING_API_DEB_FILENAME}
-    ```
+2. When complete, Senzing is installed in the `SENZING_G2_DIR` and `SENZING_DATA_DIR` directories.
 
 ## Develop
 
-### Prerequisite software
+The following instructions are used when modifying and building the Docker image.
+
+### Prerequisite software for development
 
 The following software programs need to be installed:
 
@@ -221,12 +136,14 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
 1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
-### Build docker image for development
+### Build Docker image
 
 1. **Option #1:** Using `docker` command and GitHub.
 
     ```console
-    sudo docker build --tag senzing/apt https://github.com/senzing/docker-apt.git
+    sudo docker build \
+      --tag senzing/apt \
+      https://github.com/senzing/docker-apt.git
     ```
 
 1. **Option #2:** Using `docker` command and local repository.
@@ -243,9 +160,54 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
     sudo make docker-build
     ```
 
-    Note: `sudo make docker-build-development-cache` can be used to create cached docker layers.
+    Note: `sudo make docker-build-development-cache` can be used to create cached Docker layers.
 
 ## Examples
+
+## Advanced
+
+### Configuration
+
+Configuration values specified by environment variable or command line parameter.
+
+- **[SENZING_ACCEPT_EULA](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula)**
+- **[SENZING_API_DEB_FILENAME](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_api_deb_filename)**
+- **[SENZING_DATA_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_data_dir)**
+- **[SENZING_DATA_DEB_FILENAME](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_data_deb_filename)**
+- **[SENZING_DEB_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_deb_dir)**
+- **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_g2_dir)**
+
+### Run Docker container on local file
+
+`senzing/apt` can be used to install local DEB files.
+
+1. To download Senzing DEB file, see
+   [github.com/Senzing/docker-aptdownloader](https://github.com/Senzing/docker-aptdownloader).
+
+1. :pencil2: Set additional environment variables.
+   Identify directory containing DEB files and the exact names of the DEB files.
+   Example:
+
+    ```console
+    export SENZING_DEB_DIR=~/Downloads
+    export SENZING_API_DEB_FILENAME=senzingapi-nn.nn.nn.x86_64.rpm
+    export SENZING_DATA_DEB_FILENAME=senzingdata-v1-nn.nn.nn.x86_64.rpm
+    ```
+
+1. Run the Docker container.
+   Example:
+
+    ```console
+    sudo docker run \
+      --rm \
+      --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
+      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
+      --volume ${SENZING_DEB_DIR}:/data \
+      ${SENZING_ACCEPT_EULA_PARAMETER} \
+      senzing/apt -y localinstall \
+        /data/${SENZING_DATA_DEB_FILENAME} \
+        /data/${SENZING_API_DEB_FILENAME}
+    ```
 
 ## Errors
 
