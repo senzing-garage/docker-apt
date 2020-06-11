@@ -41,5 +41,5 @@ COPY ./rootfs /
 
 # Runtime execution.
 
-ENTRYPOINT ["apt"]
+ENTRYPOINT ["/app/apt-helper.sh"]
 CMD ["-y", "install", "senzingapi"]
