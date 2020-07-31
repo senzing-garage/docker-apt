@@ -39,6 +39,10 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
 
 COPY ./rootfs /
 
+## Set environment
+
+ENV DEBIAN_FRONTEND noninteractive
+
 # Runtime execution.
 
 ENTRYPOINT ["/app/apt-helper.sh"]
