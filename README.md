@@ -75,25 +75,16 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
 
     <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
-1. Construct parameter for `docker run`.
-   Example:
-
-    ```console
-    export SENZING_ACCEPT_EULA_PARAMETER="--env SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA}"
-    ```
-
 ### Docker volumes
 
 Senzing follows the [Linux File Hierarchy Standard](https://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.pdf).
-The Senzing RPM installs 2 packages: `senzingapi`, `senzingdata`.
-`senzingapi` is installed into `/opt/senzing/g2` and `senzingdata` is installed into `/opt/senzing/data` inside the Docker container.
 Environment variables will be used in `--volume` options to externalize the installations.
 
 1. :pencil2: Specify the directory where to install Senzing.
    Example:
 
     ```console
-    export SENZING_VOLUME=/opt/my-senzing
+    export SENZING_VOLUME=~/my-senzing
     ```
 
     1. :warning:
@@ -103,34 +94,20 @@ Environment variables will be used in `--volume` options to externalize the inst
        **Windows** - [File sharing](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/share-directories-with-docker.md#windows)
        must be enabled for `SENZING_VOLUME`.
 
-1. Identify directories for `data` and `g2`.
-   Example:
-
-    ```console
-    export SENZING_DATA_DIR=${SENZING_VOLUME}/data
-    export SENZING_G2_DIR=${SENZING_VOLUME}/g2
-    ```
-
 ### Run Docker container
-
-Although the `Docker run` command looks complex,
-it accounts for all of the optional variations described above.
-Unset environment variables have no effect on the
-`docker run` command and may be removed or remain.
 
 1. Run Docker container.
    Example:
 
     ```console
-    sudo docker run \
+    docker run \
+      --env SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
       --rm \
-      --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
-      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
-      ${SENZING_ACCEPT_EULA_PARAMETER} \
+      --volume ${SENZING_VOLUME}:/opt/senzing \
       senzing/apt
     ```
 
-1. When complete, Senzing is installed in the `SENZING_G2_DIR` and `SENZING_DATA_DIR` directories.
+1. When complete, Senzing is installed in the `SENZING_VOLUME` directory.
 1. For more examples of use, see [Examples of Docker](#examples-of-docker).
 
 ## Develop
@@ -208,8 +185,7 @@ By not setting `SENZING_ACCEPT_EULA_PARAMETER`, the containerized `yum` install 
       --interactive \
       --rm \
       --tty \
-      --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
-      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
+      --volume ${SENZING_VOLUME}:/opt/senzing \
       senzing/apt
     ```
 
@@ -235,11 +211,10 @@ By not setting `SENZING_ACCEPT_EULA_PARAMETER`, the containerized `yum` install 
 
     ```console
     sudo docker run \
+      --env SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
       --rm \
-      --volume ${SENZING_DATA_DIR}:/opt/senzing/data \
-      --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
+      --volume ${SENZING_VOLUME}:/opt/senzing \
       --volume ${SENZING_DEB_DIR}:/data \
-      ${SENZING_ACCEPT_EULA_PARAMETER} \
       senzing/apt -y localinstall \
         /data/${SENZING_DATA_DEB_FILENAME} \
         /data/${SENZING_API_DEB_FILENAME}
