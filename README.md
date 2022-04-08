@@ -100,7 +100,7 @@ Environment variables will be used in `--volume` options to externalize the inst
    Example:
 
     ```console
-    sudo docker run \
+    docker run \
       --env SENZING_ACCEPT_EULA=${SENZING_ACCEPT_EULA} \
       --rm \
       --volume ${SENZING_VOLUME}:/opt/senzing \
