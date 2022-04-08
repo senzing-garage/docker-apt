@@ -93,7 +93,7 @@ Environment variables will be used in `--volume` options to externalize the inst
    Example:
 
     ```console
-    export SENZING_VOLUME=/opt/my-senzing
+    export SENZING_VOLUME=~/my-senzing
     ```
 
     1. :warning:
