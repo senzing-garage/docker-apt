@@ -47,5 +47,5 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Runtime execution.
 
-ENTRYPOINT ["/app/apt-helper.sh"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD ["-y", "install", "senzingapi"]

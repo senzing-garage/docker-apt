@@ -6,15 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [1.0.8] - 2021-04-21
+
+### Changed in 1.0.8
+
+- Updated entrypoint
+
 ## [1.0.7] - 2022-04-07
+
+### Changed in 1.0.7
 
 - Make `SENZING_APT_REPOSITORY_URL` a docker build arg.
 
 ## [1.0.6] - 2021-10-11
 
+### Changed in 1.0.6
+
 - Updated Debian version 10.10
 
-### Changed in 1.0.6
 
 ## [1.0.5] - 2021-09-10
 
