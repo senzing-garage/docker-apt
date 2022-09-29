@@ -36,7 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Debian version 10.10
 
-
 ## [1.0.5] - 2021-09-10
 
 ### Changed in 1.0.5
