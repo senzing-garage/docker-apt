@@ -23,7 +23,7 @@ default: help
 .PHONY: docker-build
 docker-build:
 	docker build \
-	    --tag $(DOCKER_IMAGE_NAME) \
+		--tag $(DOCKER_IMAGE_NAME) \
 		--tag $(DOCKER_IMAGE_NAME):$(GIT_VERSION) \
 		.
 
@@ -31,7 +31,7 @@ docker-build:
 docker-build-staging:
 	docker build \
 		--build-arg SENZING_APT_REPOSITORY_URL=$(SENZING_APT_STAGING_REPOSITORY_URL) \
-	    --tag $(DOCKER_IMAGE_NAME)-staging \
+		--tag $(DOCKER_IMAGE_NAME)-staging \
 		--tag $(DOCKER_IMAGE_NAME)-staging:$(GIT_VERSION) \
 		.
 

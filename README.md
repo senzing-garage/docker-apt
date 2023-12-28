@@ -1,5 +1,17 @@
 # docker-apt
 
+If you are beginning your journey with
+[Senzing](https://senzing.com/),
+please start with
+[Senzing Quick Start guides](https://docs.senzing.com/quickstart/).
+
+You are in the
+[Senzing Garage](https://github.com/senzing-garage)
+where projects are "tinkered" on.
+Although this GitHub repository may help you understand an approach to using Senzing,
+it's not considered to be "production ready" and is not considered to be part of the Senzing product.
+Heck, it may not even be appropriate for your application of Senzing!
+
 ## Synopsis
 
 A Docker wrapper over the `apt` command.
@@ -35,12 +47,12 @@ The default behavior is to install the latest `senzingapi` packages.
 
 At [Senzing](http://senzing.com),
 we strive to create GitHub documentation in a
-"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
+"[don't make me think](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
 For the most part, instructions are copy and paste.
 Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
 Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
 If the instructions are not clear, please let us know by opening a new
-[Documentation issue](https://github.com/Senzing/docker-apt/issues/new?template=documentation_request.md)
+[Documentation issue](https://github.com/senzing-garage/docker-apt/issues/new?template=documentation_request.md)
 describing where we can improve.   Now on with the show...
 
 ### Legend
@@ -54,14 +66,14 @@ describing where we can improve.   Now on with the show...
 ## Related artifacts
 
 1. [DockerHub](https://hub.docker.com/r/senzing/apt)
-1. [Helm Chart](https://github.com/Senzing/charts/tree/main/charts/senzing-apt)
+1. [Helm Chart](https://github.com/senzing-garage/charts/tree/main/charts/senzing-apt)
 
 ## Expectations
 
 - **Space:** This repository and demonstration require 6 GB free disk space.
 - **Time:** Budget 10 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
-  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+  - [Docker](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker.md)
 
 ## Demonstrate using Docker
 
@@ -73,7 +85,7 @@ To use the Senzing code, you must agree to the End User License Agreement (EULA)
    This ensures that you make a conscious effort to accept the EULA.
    Example:
 
-    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
+    <pre>export SENZING_ACCEPT_EULA="&lt;the value from <a href="https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula">this link</a>&gt;"</pre>
 
 ### Docker volumes
 
@@ -88,10 +100,10 @@ Environment variables will be used in `--volume` options to externalize the inst
     ```
 
     1. :warning:
-       **macOS** - [File sharing](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/share-directories-with-docker.md#macos)
+       **macOS** - [File sharing](https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/share-directories-with-docker.md#macos)
        must be enabled for `SENZING_VOLUME`.
     1. :warning:
-       **Windows** - [File sharing](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/share-directories-with-docker.md#windows)
+       **Windows** - [File sharing](https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/share-directories-with-docker.md#windows)
        must be enabled for `SENZING_VOLUME`.
 
 ### Run Docker container
@@ -120,14 +132,14 @@ The following instructions are used when modifying and building the Docker image
 These are "one-time tasks" which may already have been completed.
 
 1. The following software programs need to be installed:
-    1. [git](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/git.md)
-    1. [make](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/make.md)
-    1. [docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+    1. [git](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/git.md)
+    1. [make](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/make.md)
+    1. [docker](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker.md)
 
 ### Clone repository
 
 For more information on environment variables,
-see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md).
+see [Environment Variables](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md).
 
 1. Set these environment variable values:
 
@@ -138,7 +150,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
     ```
 
-1. Using the environment variables values just set, follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
+1. Using the environment variables values just set, follow steps in [clone-repository](https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/clone-repository.md) to install the Git repository.
 
 ### Build Docker image
 
@@ -147,7 +159,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/main/
     ```console
     sudo docker build \
       --tag senzing/apt \
-      https://github.com/senzing/docker-apt.git#main
+      https://github.com/senzing-garage/docker-apt.git#main
     ```
 
 1. **Option #2:** Using `docker` command and local repository.
@@ -194,7 +206,7 @@ By not setting `SENZING_ACCEPT_EULA_PARAMETER`, the containerized `yum` install 
 `senzing/apt` can be used to install local DEB files.
 
 1. To download Senzing DEB file, see
-   [github.com/Senzing/docker-aptdownloader](https://github.com/Senzing/docker-aptdownloader).
+   [github.com/Senzing/docker-aptdownloader](https://github.com/senzing-garage/docker-aptdownloader).
 
 1. :pencil2: Set additional environment variables.
    Identify directory containing DEB files and the exact names of the DEB files.
@@ -226,12 +238,12 @@ By not setting `SENZING_ACCEPT_EULA_PARAMETER`, the containerized `yum` install 
 
 Configuration values specified by environment variable or command line parameter.
 
-- **[SENZING_ACCEPT_EULA](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula)**
-- **[SENZING_API_DEB_FILENAME](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_api_deb_filename)**
-- **[SENZING_DATA_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_data_dir)**
-- **[SENZING_DATA_DEB_FILENAME](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_data_deb_filename)**
-- **[SENZING_DEB_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_deb_dir)**
-- **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_g2_dir)**
+- **[SENZING_ACCEPT_EULA](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_accept_eula)**
+- **[SENZING_API_DEB_FILENAME](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_api_deb_filename)**
+- **[SENZING_DATA_DIR](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_data_dir)**
+- **[SENZING_DATA_DEB_FILENAME](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_data_deb_filename)**
+- **[SENZING_DEB_DIR](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_deb_dir)**
+- **[SENZING_G2_DIR](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_g2_dir)**
 
 ## Errors
 
