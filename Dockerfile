@@ -2,7 +2,7 @@ ARG BASE_IMAGE=debian:11.8-slim@sha256:19664a5752dddba7f59bb460410a0e1887af346e2
 FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2023-11-14
-ARG SENZING_APT_REPOSITORY_URL=https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.0-1_amd64.deb
+ARG SENZING_APT_REPOSITORY_URL=https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.1-1_all.deb
 
 LABEL Name="senzing/apt" \
       Maintainer="support@senzing.com" \
@@ -24,12 +24,12 @@ RUN apt update \
 # Install Senzing repository index.
 
 RUN curl \
-    --output /senzingrepo_1.0.0-1_amd64.deb \
+    --output /senzingrepo_1.0.1-1_all.deb \
     ${SENZING_APT_REPOSITORY_URL} \
  && apt -y install \
-    /senzingrepo_1.0.0-1_amd64.deb \
+    /senzingrepo_1.0.1-1_all.deb \
  && apt update \
- && rm /senzingrepo_1.0.0-1_amd64.deb
+ && rm /senzingrepo_1.0.1-1_all.deb
 
 # Support for msodbcsql17.
 
