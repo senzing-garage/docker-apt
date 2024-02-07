@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: build docker image and push to DockerHub
-        uses: Senzing/github-action-docker-buildx-build@v1
+        uses: senzing-factory/github-action-docker-buildx-build@v1
         with:
           build-options: "--push"
           image-repository: senzing/apt
