@@ -29,7 +29,7 @@ RUN curl \
   && apt -y install \
   /senzingrepo_2.0.0-1_all.deb \
   && apt update \
-  && rm /senzingrepo_1.0.1-1_all.deb
+  && rm /senzingrepo_2.0.0-1_all.deb
 
 # Support for msodbcsql17.
 
