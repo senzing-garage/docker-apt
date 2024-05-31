@@ -10,15 +10,14 @@ LABEL Name="senzing/apt" \
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
-# Install packages via apt.
+# Install packages via apt-get.
 
-RUN apt update \
-  && apt -y install \
+RUN apt-get update \
+  && apt-get -y install \
   apt-transport-https \
   ca-certificates \
   curl \
   gnupg \
-  sudo \
   wget
 
 # Install Senzing repository index.
@@ -26,9 +25,9 @@ RUN apt update \
 RUN curl \
   --output /senzingrepo_2.0.0-1_all.deb \
   ${SENZING_APT_REPOSITORY_URL} \
-  && apt -y install \
+  && apt-get -y install \
   /senzingrepo_2.0.0-1_all.deb \
-  && apt update \
+  && apt-get update \
   && rm /senzingrepo_2.0.0-1_all.deb
 
 # Support for msodbcsql17.
@@ -40,6 +39,8 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
 # Copy files from repository.
 
 COPY ./rootfs /
+
+USER 1001
 
 ## Set environment
 
