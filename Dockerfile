@@ -25,7 +25,7 @@ RUN apt-get update \
 RUN curl \
   --output /senzingrepo_2.0.0-1_all.deb \
   ${SENZING_APT_REPOSITORY_URL} \
-  && apt -y install \
+  && apt-get -y install \
   /senzingrepo_2.0.0-1_all.deb \
   && apt-get update \
   && rm /senzingrepo_2.0.0-1_all.deb
