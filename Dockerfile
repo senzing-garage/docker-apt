@@ -6,7 +6,7 @@ ARG SENZING_APT_REPOSITORY_URL=https://senzing-production-apt.s3.amazonaws.com/s
 
 LABEL Name="senzing/apt" \
   Maintainer="support@senzing.com" \
-  Version="1.0.14"
+  Version="1.0.15"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
