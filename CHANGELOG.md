@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.16] - 2025-02-04
+
+### Changed in 1.0.16
+
+- In `Dockerfile`, updated FROM instruction to `debian:11.11-slim`
+
 ## [1.0.15] - 2024-06-24
 
 ### Changed in 1.0.15
