@@ -1,12 +1,12 @@
-ARG BASE_IMAGE=debian:11.11-slim
+ARG BASE_IMAGE=debian:12-slim
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2025-02-04
+ENV REFRESHED_AT=2025-09-02
 ARG SENZING_APT_REPOSITORY_URL=https://senzing-production-apt.s3.amazonaws.com/senzingrepo_2.0.0-1_all.deb
 
 LABEL Name="senzing/apt" \
       Maintainer="support@senzing.com" \
-      Version="1.0.16"
+      Version="1.0.17"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -44,9 +44,8 @@ USER 1001
 
 ## Set environment
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Runtime execution.
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
-CMD ["-y", "install", "senzingapi"]
