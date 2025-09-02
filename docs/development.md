@@ -22,7 +22,7 @@ see [Environment Variables].
 1. Set these environment variable values:
 
    ```console
-   export GIT_ACCOUNT=senzing
+   export GIT_ACCOUNT=senzing-garage
    export GIT_REPOSITORY=docker-apt
    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
