@@ -57,4 +57,7 @@ see [Environment Variables].
 
    Note: `sudo make docker-build-development-cache` can be used to create cached Docker layers.
 
+[clone-repository]: https://github.com/senzing-garage/knowledge-base/blob/main/HOWTO/clone-repository.md
 [Docker]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker.md
+[git]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/git.md
+[make]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/make.md
