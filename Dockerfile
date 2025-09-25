@@ -2,7 +2,7 @@ ARG BASE_IMAGE=debian:13-slim@sha256:c2880112cc5c61e1200c26f106e4123627b49726375
 FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2025-09-02
-ARG SENZING_APT_REPOSITORY_URL=https://senzing-production-apt.s3.amazonaws.com/senzingrepo_2.0.0-1_all.deb
+ARG SENZING_APT_REPOSITORY_URL=https://senzing-production-apt.s3.amazonaws.com/senzingrepo_2.0.1-1_all.deb
 
 LABEL Name="senzing/apt" \
       Maintainer="support@senzing.com" \
