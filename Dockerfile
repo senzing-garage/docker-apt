@@ -34,9 +34,9 @@ RUN curl --output /senzingrepo_2.0.0-1_all.deb  ${SENZING_APT_REPOSITORY_URL} \
 #  && apt-get update
 
 RUN curl -sSL -O https://packages.microsoft.com/config/debian/$(grep VERSION_ID /etc/os-release | cut -d '"' -f 2 | cut -d '.' -f 1)/packages-microsoft-prod.deb \
- && dpkg -i packages-microsoft-prod.deb \
+ && apt-get -y install /packages-microsoft-prod.deb \
  && apt-get update \
- && packages-microsoft-prod.deb
+ && rm /packages-microsoft-prod.deb
 
 # Copy files from repository.
 
