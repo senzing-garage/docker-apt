@@ -1,8 +1,8 @@
-ARG BASE_IMAGE=debian:12-slim@sha256:df52e55e3361a81ac1bead266f3373ee55d29aa50cf0975d440c2be3483d8ed3
+ARG BASE_IMAGE=debian:13-slim@sha256:c2880112cc5c61e1200c26f106e4123627b49726375eb5846313da9cca117337
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2025-09-02
-ARG SENZING_APT_REPOSITORY_URL=https://senzing-production-apt.s3.amazonaws.com/senzingrepo_2.0.0-1_all.deb
+ENV REFRESHED_AT=2025-09-25
+ARG SENZING_APT_REPOSITORY_URL=https://senzing-production-apt.s3.amazonaws.com/senzingrepo_2.0.1-1_all.deb
 
 LABEL Name="senzing/apt" \
       Maintainer="support@senzing.com" \
@@ -14,27 +14,23 @@ HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
 RUN apt-get update \
  && apt-get -y install \
-    apt-transport-https \
+      apt-transport-https \
       ca-certificates \
-      curl \
-      gnupg \
-      wget
+      curl
 
 # Install Senzing repository index.
 
-RUN curl \
-      --output /senzingrepo_2.0.0-1_all.deb \
-      ${SENZING_APT_REPOSITORY_URL} \
- && apt-get -y install \
-      /senzingrepo_2.0.0-1_all.deb \
+RUN curl --output /senzingrepo_2.0.0-1_all.deb  ${SENZING_APT_REPOSITORY_URL} \
+ && apt-get -y install /senzingrepo_2.0.0-1_all.deb \
  && apt-get update \
  && rm /senzingrepo_2.0.0-1_all.deb
 
 # Support for msodbcsql17.
 
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
- && curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list \
- && apt-get update
+RUN curl -sSL -O https://packages.microsoft.com/config/debian/$(grep VERSION_ID /etc/os-release | cut -d '"' -f 2 | cut -d '.' -f 1)/packages-microsoft-prod.deb \
+ && apt-get -y install /packages-microsoft-prod.deb \
+ && apt-get update \
+ && rm /packages-microsoft-prod.deb
 
 # Copy files from repository.
 
