@@ -14,7 +14,7 @@ HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
 RUN apt-get update \
  && apt-get -y install \
-    apt-transport-https \
+      apt-transport-https \
       ca-certificates \
       curl \
       gnupg \
@@ -22,18 +22,20 @@ RUN apt-get update \
 
 # Install Senzing repository index.
 
-RUN curl \
-      --output /senzingrepo_2.0.0-1_all.deb \
-      ${SENZING_APT_REPOSITORY_URL} \
- && apt-get -y install \
-      /senzingrepo_2.0.0-1_all.deb \
+RUN curl --output /senzingrepo_2.0.0-1_all.deb  ${SENZING_APT_REPOSITORY_URL} \
+ && apt-get -y install /senzingrepo_2.0.0-1_all.deb \
  && apt-get update \
  && rm /senzingrepo_2.0.0-1_all.deb
 
 # Support for msodbcsql17.
 
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
- && curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+# RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+#  && curl https://packages.microsoft.com/config/debian/13/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+#  && apt-get update
+
+RUN curl -sSL -O https://packages.microsoft.com/config/debian/$(grep VERSION_ID /etc/os-release | cut -d '"' -f 2 | cut -d '.' -f 1)/packages-microsoft-prod.deb \
+ && dpkg -i packages-microsoft-prod.deb \
+ && packages-microsoft-prod.deb \
  && apt-get update
 
 # Copy files from repository.
