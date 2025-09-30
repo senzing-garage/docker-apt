@@ -13,22 +13,22 @@ HEALTHCHECK CMD ["/app/healthcheck.sh"]
 # Install packages via apt-get.
 
 RUN apt-get update \
- && apt-get -y install \
+ && apt-get -y --no-install-recommends install \
       apt-transport-https \
       ca-certificates \
       curl
 
 # Install Senzing repository index.
 
-RUN curl --output /senzingrepo_2.0.0-1_all.deb  ${SENZING_APT_REPOSITORY_URL} \
- && apt-get -y install /senzingrepo_2.0.0-1_all.deb \
+RUN curl --output /senzingrepo.deb  ${SENZING_APT_REPOSITORY_URL} \
+ && apt-get -y --no-install-recommends install /senzingrepo.deb \
  && apt-get update \
- && rm /senzingrepo_2.0.0-1_all.deb
+ && rm /senzingrepo.deb
 
 # Support for msodbcsql17.
 
 RUN curl -sSL -O https://packages.microsoft.com/config/debian/$(grep VERSION_ID /etc/os-release | cut -d '"' -f 2 | cut -d '.' -f 1)/packages-microsoft-prod.deb \
- && apt-get -y install /packages-microsoft-prod.deb \
+ && apt-get -y --no-install-recommends install /packages-microsoft-prod.deb \
  && apt-get update \
  && rm /packages-microsoft-prod.deb
 
