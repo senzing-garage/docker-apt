@@ -10,6 +10,7 @@
     "dockerhub",
     "dpkg",
     "ICLA",
+    "ignorefile",
     "localinstall",
     "msodbcsql",
     "noninteractive",
